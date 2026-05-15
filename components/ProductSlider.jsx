@@ -1,101 +1,225 @@
 "use client";
-import { useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Crown, ShoppingBag, Gem, Sparkles, ArrowRight } from "lucide-react";
 
 const products = [
-  { name: "Kitchen Chimneys", image: "/chimney/chimney1.jpg", price: "From ₹9,999", category: "chimney" },
-  { name: "Auto Clean Chimney", image: "/chimney/chimney2.jpg", price: "From ₹12,999", category: "chimney" },
-  { name: "Curved Glass Chimney", image: "/chimney/chimney3.jpg", price: "From ₹15,499", category: "chimney" },
-  { name: "Wall Mount Chimney", image: "/chimney/chimney4.jpg", price: "From ₹8,999", category: "chimney" },
-  { name: "Gas Hobs", image: "/cooktop/cooktop1.jpg", price: "From ₹5,999", category: "cooktop" },
-  { name: "Induction Cooktop", image: "/cooktop/cooktop2.jpg", price: "From ₹4,999", category: "cooktop" },
-  { name: "4 Burner Hob", image: "/cooktop/cooktop3.jpg", price: "From ₹7,999", category: "cooktop" },
-  { name: "Mixer Hob", image: "/cooktop/cooktop4.jpg", price: "From ₹11,999", category: "cooktop" },
-  { name: "Modular Kitchens", image: "/modular/modular1.jpg", price: "From ₹65,000", category: "modular" },
-  { name: "L-Shape Kitchen", image: "/modular/modular2.jpg", price: "From ₹85,000", category: "modular" },
-  { name: "U-Shape Kitchen", image: "/modular/modular3.jpg", price: "From ₹1,25,000", category: "modular" },
-  { name: "Straight Kitchen", image: "/modular/modular4.jpg", price: "From ₹55,000", category: "modular" },
-  { name: "Premium Modular", image: "/modular/modular6.jpg", price: "From ₹95,000", category: "modular" },
-  { name: "Modern Design", image: "/modular/modular7.jpg", price: "From ₹75,000", category: "modular" },
+  { 
+    name: "Modular Kitchen", 
+    image: "/kitchen/kitchen1.jpg", 
+    tag: "Most Popular", 
+    category: "modular-kitchen", 
+    link: "/products#modular-kitchen",
+    description: "Complete modular kitchen solutions with premium appliances",
+    color: "from-orange-500 to-red-600"
+  },
+  { 
+    name: "Sofa Set", 
+    image: "/gallery-images/Sofaset/Royal Walnut L-Shape Sofa.jpeg", 
+    tag: "Luxury Collection", 
+    category: "sofa-set", 
+    link: "/products#sofa-set",
+    description: "Luxurious sofas and corner sets for your living room",
+    color: "from-rose-500 to-red-600"
+  },
+  { 
+    name: "Beds", 
+    image: "/gallery-images/Beds/Royal Crest Bed.jpeg", 
+    tag: "Royal Sleep", 
+    category: "beds", 
+    link: "/products#beds",
+    description: "Premium beds for ultimate comfort and style",
+    color: "from-blue-500 to-indigo-600"
+  },
+  { 
+    name: "Wardrobes & Walldrops", 
+    image: "/gallery-images/walldrops/Imperia Luxe Wardrobe.jpeg", 
+    tag: "Style & Storage", 
+    category: "wardrobes", 
+    link: "/products#wardrobes",
+    description: "Designer wardrobes and elegant walldrop solutions",
+    color: "from-amber-500 to-orange-600"
+  },
+  { 
+    name: "TV Cabinet", 
+    image: "/gallery-images/tv-cabinet/Marble Fusion Media Wall.jpeg", 
+    tag: "Entertainment Hub", 
+    category: "tv-cabinet", 
+    link: "/products#tv-cabinet",
+    description: "Elegant TV units and media walls for entertainment areas",
+    color: "from-emerald-500 to-teal-600"
+  },
+  { 
+    name: "Partition Design", 
+    image: "/gallery-images/partition-design/Royal Slat Partition1.jpeg", 
+    tag: "Interior Design", 
+    category: "partition", 
+    link: "/products#partition",
+    description: "Beautiful partition designs for modern interiors",
+    color: "from-purple-500 to-pink-600"
+  },
+  { 
+    name: "Pooja Room", 
+    image: "/gallery-images/pooja-room/Omkar Glow Pooja Unit1.jpeg", 
+    tag: "Spiritual", 
+    category: "pooja-room", 
+    link: "/products#pooja-room",
+    description: "Sacred and elegant pooja room designs",
+    color: "from-yellow-500 to-amber-600"
+  },
+  { 
+    name: "Office Furniture", 
+    image: "", 
+    tag: "New Launch", 
+    category: "office-furniture", 
+    link: "/products#office-furniture",
+    description: "Ergonomic office furniture for productive workspaces",
+    color: "from-slate-500 to-gray-600",
+    comingSoon: true
+  },
 ];
 
-export default function ProductSlider() {
-  const sliderRef = useRef(null);
+const ProductCard = ({ product, index }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      viewport={{ once: true }}
+      className="group relative"
+    >
+      <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 h-full flex flex-col">
+        
+        {/* Tag Badge */}
+        <div className="absolute top-4 left-4 z-10">
+          <span className={`px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1 bg-linear-to-r ${product.color} text-white`}>
+            <Crown size={12} />
+            {product.tag}
+          </span>
+        </div>
+        
+        {/* Image Container */}
+        <div className="relative h-56 bg-linear-to-br from-gray-100 to-gray-200 overflow-hidden">
+          {product.comingSoon || !product.image ? (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-linear-to-br from-gray-200 to-gray-300">
+              <Sparkles className="w-12 h-12 text-gray-400 mb-3" />
+              <span className="text-gray-500 font-medium">Coming Soon</span>
+              <span className="text-gray-400 text-xs mt-1">New designs on the way!</span>
+            </div>
+          ) : (
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              quality={85}
+            />
+          )}
+        </div>
+        
+        {/* Content */}
+        <div className="p-5 flex-1 flex flex-col">
+          <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors line-clamp-1">
+            {product.name}
+          </h3>
+          <p className="text-gray-500 text-sm mb-3 line-clamp-2 flex-1">
+            {product.description}
+          </p>
+          <div className="flex items-center gap-2 mt-2 mb-4">
+            <div className="w-8 h-px bg-orange-500/50"></div>
+            <span className="text-xs text-gray-400">Premium Quality</span>
+          </div>
+          <Link
+            href={product.link}
+            className="inline-flex items-center justify-center gap-2 bg-linear-to-r from-orange-500 to-red-600 text-white py-2.5 rounded-lg font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-full"
+          >
+            Explore Now <ArrowRight size={16} />
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
-  const scroll = (direction) => {
-    if (sliderRef.current) {
-      const scrollAmount = 400;
-      sliderRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
+export default function ProductSlider() {
+  // Split products into two rows
+  const firstRow = products.slice(0, 4);
+  const secondRow = products.slice(4, 8);
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-linear-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Our Premium <span className="text-red-600">Products</span>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <div className="inline-block mb-4">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-100 to-red-100 border border-orange-200 shadow-sm">
+              <Gem className="w-4 h-4 text-orange-600" />
+              <span className="text-xs uppercase tracking-wider text-orange-700 font-semibold">Premium Collection</span>
+            </div>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            Our Premium <span className="bg-linear-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">Products</span>
           </h2>
-          <p className="text-xl text-gray-600">Explore our wide range of kitchen solutions</p>
-        </div>
+          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+            Explore our wide range of kitchen solutions crafted for modern homes
+          </p>
+          <div className="w-24 h-1 bg-linear-to-r from-orange-500 to-red-600 mx-auto mt-6 rounded-full"></div>
+        </motion.div>
 
-        <div className="relative">
-          <button
-            onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg p-3 rounded-full hover:bg-gray-100 transition-all duration-300 -ml-4"
-          >
-            <ChevronLeft size={24} />
-          </button>
-
-          <div
-            ref={sliderRef}
-            className="flex overflow-x-auto gap-6 pb-8 scroll-smooth hide-scrollbar"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            {products.map((product, index) => (
-              <div key={index} className="min-w-75 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="relative h-64 bg-gray-100">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
-                    quality={75}
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">{product.name}</h3>
-                  <p className="text-red-600 font-semibold text-lg mb-3">{product.price}</p>
-                  <a
-                    href={`https://wa.me/919511629883?text=I'm interested in ${product.name} - ${product.price}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-center bg-gray-100 text-gray-800 py-2 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300"
-                  >
-                    Enquire Now
-                  </a>
-                </div>
-              </div>
+        {/* First Row */}
+        <div className="mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {firstRow.map((product, index) => (
+              <ProductCard key={index} product={product} index={index} />
             ))}
           </div>
-
-          <button
-            onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg p-3 rounded-full hover:bg-gray-100 transition-all duration-300 -mr-4"
-          >
-            <ChevronRight size={24} />
-          </button>
         </div>
+
+        {/* Second Row */}
+        <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {secondRow.map((product, index) => (
+              <ProductCard key={index + 4} product={product} index={index + 4} />
+            ))}
+          </div>
+        </div>
+
+        {/* View All Products Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="text-center mt-12"
+        >
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-2 bg-transparent border-2 border-orange-600 text-orange-600 px-8 py-3 rounded-full font-semibold hover:bg-orange-600 hover:text-white transition-all duration-300 transform hover:scale-105"
+          >
+            View All Products <ArrowRight size={18} />
+          </Link>
+        </motion.div>
       </div>
 
       <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
+        .line-clamp-1 {
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       `}</style>
     </section>

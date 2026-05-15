@@ -17,7 +17,9 @@ KESARINANDAN
 
 <Link href="/">Home</Link>
 <Link href="/products">Products</Link>
+<Link href="/gallery">Our Work</Link>
 <Link href="/contact">Contact</Link>
+
 
 </nav>
 

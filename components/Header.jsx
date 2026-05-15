@@ -50,10 +50,14 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-8 font-medium">
-          {["Home", "Products", "Contact"].map((item) => (
+          {["Home", "Products", "Our Work", "Contact"].map((item) => (
             <Link
               key={item}
-              href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+              href={
+                item === "Home" ? "/" : 
+                item === "Our Work" ? "/gallery" : 
+                `/${item.toLowerCase()}`
+              }
               className={`relative hover:text-orange-600 transition-colors duration-300 ${
                 isScrolled ? "text-gray-700" : "text-white"
               } after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-orange-600 after:transition-all after:duration-300 hover:after:w-full`}
@@ -105,6 +109,7 @@ export default function Header() {
             </div>
             <Link href="/" className="text-gray-700 hover:text-orange-600 py-2 px-4 rounded-lg hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
             <Link href="/products" className="text-gray-700 hover:text-orange-600 py-2 px-4 rounded-lg hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Products</Link>
+            <Link href="/gallery" className="text-gray-700 hover:text-orange-600 py-2 px-4 rounded-lg hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Our Work</Link>
             <Link href="/contact" className="text-gray-700 hover:text-orange-600 py-2 px-4 rounded-lg hover:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
             <a href="https://wa.me/919511629883" className="bg-orange-600 text-white text-center px-4 py-2 rounded-lg hover:bg-orange-700 transition">WhatsApp</a>
           </div>
